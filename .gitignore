@@ -8,6 +8,7 @@ __pycache__/
 
 # Jupyter
 .ipynb_checkpoints/
+notebooks/executed/
 
 # Streamlit
 .streamlit/secrets.toml

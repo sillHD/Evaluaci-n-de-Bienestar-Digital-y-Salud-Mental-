@@ -1,0 +1,178 @@
+{
+  "environment": {
+    "python": "3.11.9",
+    "pandas": "3.0.5",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.0",
+    "joblib": "1.5.3",
+    "streamlit": "1.60.0",
+    "matplotlib": "3.11.1",
+    "openpyxl": "3.1.5"
+  },
+  "dataset": {
+    "path": "data/mental_health_digital_behavior_data.csv",
+    "shape": [
+      500,
+      9
+    ],
+    "columns": [
+      "daily_screen_time_min",
+      "num_app_switches",
+      "sleep_hours",
+      "notification_count",
+      "social_media_time_min",
+      "focus_score",
+      "mood_score",
+      "anxiety_level",
+      "digital_wellbeing_score"
+    ],
+    "dtypes": {
+      "daily_screen_time_min": "float64",
+      "num_app_switches": "int64",
+      "sleep_hours": "float64",
+      "notification_count": "int64",
+      "social_media_time_min": "float64",
+      "focus_score": "float64",
+      "mood_score": "float64",
+      "anxiety_level": "float64",
+      "digital_wellbeing_score": "float64"
+    },
+    "missing_counts": {
+      "daily_screen_time_min": 0,
+      "num_app_switches": 0,
+      "sleep_hours": 0,
+      "notification_count": 0,
+      "social_media_time_min": 0,
+      "focus_score": 0,
+      "mood_score": 0,
+      "anxiety_level": 0,
+      "digital_wellbeing_score": 0
+    },
+    "duplicate_rows": 0,
+    "sha256": "009ff9498455dcd780f858ab1a0c650ef1be45b8b18b5d174dc011331e7eb310",
+    "at_risk_distribution": {
+      "1": 352,
+      "0": 148
+    }
+  },
+  "classification": {
+    "target_definition": "(anxiety_level >= 8) OR (mood_score <= 6)",
+    "model_class": "LogisticRegression",
+    "model_params": {
+      "C": 1.0,
+      "class_weight": null,
+      "dual": false,
+      "fit_intercept": true,
+      "intercept_scaling": 1,
+      "l1_ratio": 0.0,
+      "max_iter": 100,
+      "n_jobs": null,
+      "penalty": "deprecated",
+      "random_state": null,
+      "solver": "lbfgs",
+      "tol": 0.0001,
+      "verbose": 0,
+      "warm_start": false
+    },
+    "feature_count": 9,
+    "feature_names": [
+      "daily_screen_time_min",
+      "num_app_switches",
+      "sleep_hours",
+      "notification_count",
+      "social_media_time_min",
+      "focus_score",
+      "mood_score",
+      "anxiety_level",
+      "digital_wellbeing_score"
+    ],
+    "cv_method": "cross_val_predict",
+    "folds": 10,
+    "out_of_fold_predictions": true,
+    "preprocessing_scope": "Todas las transformaciones ocurren antes de CV",
+    "possible_data_leakage": "Sí, X incluye digital_wellbeing_score que está correlacionada con la etiqueta at_risk derivada.",
+    "confusion_matrix": [
+      [
+        143,
+        5
+      ],
+      [
+        4,
+        348
+      ]
+    ],
+    "accuracy": 0.982,
+    "precision": 0.9858356940509915,
+    "recall": 0.9886363636363636,
+    "f1": 0.9872340425531915,
+    "roc_auc": "not_computed_in_baseline_logic"
+  },
+  "regression": {
+    "target": "digital_wellbeing_score",
+    "split": {
+      "test_size": 0.2,
+      "random_state": 42
+    },
+    "feature_selection": "Top 3 by absolute correlation with digital_wellbeing_score",
+    "top3_features": [
+      "anxiety_level",
+      "sleep_hours",
+      "focus_score"
+    ],
+    "top3_correlations": {
+      "anxiety_level": -0.836475911642246,
+      "sleep_hours": 0.4404256331292677,
+      "focus_score": 0.4112660629904365
+    },
+    "model_class": "LinearRegression",
+    "model_params": {
+      "copy_X": true,
+      "fit_intercept": true,
+      "n_jobs": null,
+      "positive": false,
+      "tol": 1e-06
+    },
+    "coefficients": {
+      "anxiety_level": -2.9990773623297167,
+      "sleep_hours": 2.995290692628936,
+      "focus_score": 3.9826463673451187
+    },
+    "intercept": 30.151384821767873,
+    "r2": 0.9994721320755598,
+    "mse": 0.030885816192956543,
+    "rmse": 0.17574360925210494,
+    "mae": 0.14327795363199924,
+    "mape": 0.28436100226599204,
+    "train_rows": 400,
+    "test_rows": 100
+  },
+  "artifacts": {
+    "logistic_model": {
+      "path": "models/logistic_model_mental_health.joblib",
+      "size_bytes": 1359,
+      "sha256": "52ff2bfb048164eb93d03741a93c115a71ec084524bfebcef2ad04290dc99c4b",
+      "feature_names": [
+        "daily_screen_time_min",
+        "num_app_switches",
+        "sleep_hours",
+        "notification_count",
+        "social_media_time_min",
+        "focus_score",
+        "mood_score",
+        "anxiety_level",
+        "digital_wellbeing_score"
+      ]
+    },
+    "linear_model": {
+      "path": "models/linear_regression_digital_wellbeing.joblib",
+      "size_bytes": 897,
+      "sha256": "c3a501c2da24fb173840c004a1b0e83e85cb2ee0d2f56ec336a56533a25b3461",
+      "feature_names": [
+        "anxiety_level",
+        "sleep_hours",
+        "focus_score"
+      ]
+    }
+  },
+  "baseline_predictions_file": "validation/baseline_predictions.csv"
+}

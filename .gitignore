@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Secrets and env
+.env
+.env.*
+*.env
+secrets.*
+*.key
+*.pem
+
+# Private data
+private-data/
+
+# Model artifacts and outputs
+models/*.pkl
+models/*.joblib
+outputs/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/

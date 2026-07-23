@@ -1,3 +1,4 @@
+
 import os
 
 import joblib
@@ -5,16 +6,14 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
 MODELOS_PATH = os.path.join(PROJECT_ROOT, "models")
 
-
 try:
-    modelo_riesgo = joblib.load(os.path.join(MODELOS_PATH, "logistic_model_mental_health.pkl"))
+    modelo_riesgo = joblib.load(os.path.join(MODELOS_PATH, "logistic_model_mental_health.joblib"))
     modelo_bienestar = joblib.load(
-        os.path.join(MODELOS_PATH, "modelo_regresion_lineal_digital_wellbeing.pkl")
+        os.path.join(MODELOS_PATH, "linear_regression_digital_wellbeing.joblib")
     )
 except FileNotFoundError as e:
     st.error(f"Error cargando modelos: {e}. Verifica que los archivos existan.")
@@ -22,7 +21,6 @@ except FileNotFoundError as e:
 except Exception as e:
     st.error(f"Ocurrio un error inesperado cargando modelos: {e}")
     st.stop()
-
 
 st.title("Evaluacion de Bienestar Digital y Riesgo Mental")
 st.header("Introduce tus datos:")

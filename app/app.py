@@ -1,25 +1,38 @@
 
 import os
+from pathlib import Path
 
 import joblib
 import numpy as np
 import pandas as pd
 import streamlit as st
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))
-MODELOS_PATH = os.path.join(PROJECT_ROOT, "models")
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except ImportError:
+    pass
+
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+MODELS_DIR = Path(os.getenv("MODELS_DIR", PROJECT_ROOT / "models")).resolve()
+RISK_MODEL_PATH = MODELS_DIR / "logistic_model_mental_health.joblib"
+WELLBEING_MODEL_PATH = MODELS_DIR / "linear_regression_digital_wellbeing.joblib"
+
+if not RISK_MODEL_PATH.exists() or not WELLBEING_MODEL_PATH.exists():
+    st.error(
+        "Missing model files. Please place the trained models in the 'models' directory "
+        "or set the MODELS_DIR environment variable."
+    )
+    st.info(f"Expected files: {RISK_MODEL_PATH} and {WELLBEING_MODEL_PATH}")
+    st.stop()
 
 try:
-    modelo_riesgo = joblib.load(os.path.join(MODELOS_PATH, "logistic_model_mental_health.joblib"))
-    modelo_bienestar = joblib.load(
-        os.path.join(MODELOS_PATH, "linear_regression_digital_wellbeing.joblib")
-    )
-except FileNotFoundError as e:
-    st.error(f"Error cargando modelos: {e}. Verifica que los archivos existan.")
-    st.stop()
+    modelo_riesgo = joblib.load(RISK_MODEL_PATH)
+    modelo_bienestar = joblib.load(WELLBEING_MODEL_PATH)
 except Exception as e:
-    st.error(f"Ocurrio un error inesperado cargando modelos: {e}")
+    st.error(f"Unexpected error while loading models: {e}")
     st.stop()
 
 st.title("Evaluacion de Bienestar Digital y Riesgo Mental")

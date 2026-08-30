@@ -5,6 +5,8 @@ __pycache__/
 *.pyd
 .pytest_cache/
 .mypy_cache/
+.venv/
+venv/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -28,6 +30,7 @@ private-data/
 models/*.pkl
 models/*.joblib
 outputs/
+*.log
 
 # OS/editor
 .DS_Store
